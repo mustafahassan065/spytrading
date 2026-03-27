@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SPY Day Trading — $10K Profits Daily | Led by Eric | SPY Options Community</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --red:    #DC2626;
+      --red2:   #EF4444;
+      --red3:   #FCA5A5;
+      --jet:    #060608;
+      --dark:   #0A0A0C;
+      --panel:  #111116;
+      --panel2: #18181F;
+      --border: rgba(220,38,38,0.18);
+      --bord2:  rgba(255,255,255,0.06);
+      --dim:    rgba(255,255,255,0.4);
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--jet);color:#fff;font-family:'Manrope',sans-serif;overflow-x:hidden;}
+    .mono{font-family:'IBM Plex Mono',monospace;}
+
+    /* ── RED GRADIENT TEXT ── */
+    .red-text{
+      background:linear-gradient(135deg,#991B1B,#DC2626,#EF4444,#DC2626);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    }
+    .red-glow{box-shadow:0 0 60px rgba(220,38,38,0.2),0 0 120px rgba(220,38,38,0.08);}
+    .btn-red{background:var(--red);transition:all 0.3s ease;}
+    .btn-red:hover{background:#B91C1C;transform:translateY(-2px);box-shadow:0 0 30px rgba(220,38,38,0.4);}
+
+    /* ── NOISE ── */
+    body::before{
+      content:'';position:fixed;inset:0;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events:none;z-index:9999;opacity:0.3;
+    }
+
+    /* ── NAV ── */
+    nav{position:fixed;top:0;left:0;right:0;z-index:1000;transition:all 0.35s ease;}
+    nav.on{background:rgba(6,6,8,0.97);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);}
+
+    /* ── HERO ── */
+    .hero-bg{
+      background:
+        radial-gradient(ellipse 60% 50% at 30% 20%,rgba(185,28,28,0.1) 0%,transparent 65%),
+        radial-gradient(ellipse 40% 30% at 80% 80%,rgba(220,38,38,0.05) 0%,transparent 55%),
+        var(--jet);
+    }
+
+    /* ── SCANLINE GRID ── */
+    .scanline{
+      background-image:
+        linear-gradient(rgba(220,38,38,0.04) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(220,38,38,0.04) 1px,transparent 1px);
+      background-size:60px 60px;
+    }
+
+    /* ── MARQUEE ── */
+    @keyframes spy-scroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+    .spy-ticker{animation:spy-scroll 26s linear infinite;}
+
+    /* ── CARDS ── */
+    .data-card{
+      background:var(--panel);border:1px solid var(--bord2);
+      transition:all 0.4s ease;position:relative;overflow:hidden;
+    }
+    .data-card::before{
+      content:'';position:absolute;top:0;left:0;right:0;height:1px;
+      background:linear-gradient(90deg,transparent,var(--red),transparent);
+      transform:scaleX(0);transition:transform 0.4s ease;
+    }
+    .data-card:hover{border-color:var(--border);transform:translateY(-5px);box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 30px rgba(220,38,38,0.06);}
+    .data-card:hover::before{transform:scaleX(1);}
+
+    /* ── PLAN CARD ── */
+    .plan-card{background:var(--panel);border:1px solid var(--bord2);transition:all 0.4s ease;}
+    .plan-card.hot{border-color:var(--red);background:linear-gradient(145deg,#1a0505,var(--panel));}
+    .plan-card:hover{border-color:var(--border);}
+
+    /* ── SIGNAL ROW ── */
+    .signal-row{
+      background:var(--panel2);border:1px solid var(--bord2);border-left:3px solid var(--red);
+      transition:all 0.3s ease;
+    }
+    .signal-row:hover{background:#1f1f28;border-left-color:var(--red2);}
+
+    /* ── FAQ ── */
+    .faq-body{max-height:0;overflow:hidden;transition:max-height 0.45s ease;}
+    .faq-body.open{max-height:400px;}
+    .faq-icon{transition:transform 0.35s ease;}
+    .faq-item.open .faq-icon{transform:rotate(45deg);}
+
+    /* ── MOBILE ── */
+    #mnav{transform:translateX(100%);transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);}
+    #mnav.open{transform:translateX(0);}
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar{width:4px;}
+    ::-webkit-scrollbar-track{background:var(--jet);}
+    ::-webkit-scrollbar-thumb{background:var(--red);border-radius:4px;}
+
+    /* ── REVEAL ── */
+    @keyframes riseIn{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+    .reveal{opacity:0;}
+    .reveal.in{animation:riseIn 0.65s ease forwards;}
+
+    /* ── PULSE DOT ── */
+    .pulse-red{
+      width:8px;height:8px;border-radius:50%;background:var(--red);
+      box-shadow:0 0 0 0 rgba(220,38,38,0.4);
+      animation:pulse-r 2s infinite;
+    }
+    @keyframes pulse-r{
+      0%{box-shadow:0 0 0 0 rgba(220,38,38,0.4);}
+      70%{box-shadow:0 0 0 8px rgba(220,38,38,0);}
+      100%{box-shadow:0 0 0 0 rgba(220,38,38,0);}
+    }
+
+    /* ── CANDLE (decorative) ── */
+    .candle-green{background:#16a34a;border-radius:2px 2px 0 0;}
+    .candle-red{background:#dc2626;border-radius:2px 2px 0 0;}
+    .wick{width:1px;background:rgba(255,255,255,0.3);margin:0 auto;}
+
+    /* ── STAT NUMBER ── */
+    .stat-n{font-family:'IBM Plex Mono',monospace;font-style:italic;}
+
+    /* ── SPY options chain mock ── */
+    .chain-row{border-bottom:1px solid rgba(255,255,255,0.04);padding:6px 0;}
+    .chain-row:hover{background:rgba(220,38,38,0.04);}
+    .itm{background:rgba(220,38,38,0.08);}
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════
+     NAV
+═══════════════════════════ -->
+<nav id="navbar">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8 h-16 flex items-center justify-between">
+    <a href="#" class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:var(--red);">
+        <span class="mono font-700 text-white text-sm leading-none" style="font-weight:700;">SPY</span>
+      </div>
+      <div>
+        <div class="font-800 text-white text-base leading-tight" style="font-weight:800;">SPY Day Trading</div>
+        <div class="mono text-xs leading-none" style="color:var(--red2);font-size:0.58rem;letter-spacing:0.1em;">OPTIONS COMMUNITY · BY ERIC</div>
+      </div>
+    </a>
+
+    <div class="hidden lg:flex items-center gap-8">
+      <a href="#about"    class="text-gray-400 hover:text-white text-sm font-500 transition-colors">About</a>
+      <a href="#features" class="text-gray-400 hover:text-white text-sm font-500 transition-colors">Features</a>
+      <a href="#strategy" class="text-gray-400 hover:text-white text-sm font-500 transition-colors">Strategy</a>
+      <a href="#pricing"  class="text-gray-400 hover:text-white text-sm font-500 transition-colors">Pricing</a>
+      <a href="#faq"      class="text-gray-400 hover:text-white text-sm font-500 transition-colors">FAQ</a>
+    </div>
+
+    <div class="flex items-center gap-4">
+      <a href="https://whop.com/sdt-lifetime-member/spydaytrading?a=digitalartlab" target="_blank"
+         class="hidden lg:inline-flex btn-red items-center gap-2 px-5 py-2.5 rounded-xl mono font-700 text-sm text-white"
+         style="font-weight:700;">
+        Join — $98/mo
+      </a>
+      <button id="ham" class="lg:hidden p-2 flex flex-col gap-1.5">
+        <span class="hl w-6 h-0.5 bg-white rounded" style="transition:all 0.3s;"></span>
+        <span class="hl w-6 h-0.5 bg-white rounded" style="transition:all 0.3s;"></span>
+        <span class="hl w-4 h-0.5 bg-white rounded" style="transition:all 0.3s;"></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div id="mnav" class="fixed inset-0 z-40 flex flex-col items-center justify-center" style="background:rgba(6,6,8,0.99);">
+  <div class="text-center space-y-8">
+    <a href="#about"    class="ml block mono font-700 text-5xl text-white uppercase tracking-widest" style="font-weight:700;">About</a>
+    <a href="#features" class="ml block mono font-700 text-5xl text-white uppercase tracking-widest" style="font-weight:700;">Features</a>
+    <a href="#strategy" class="ml block mono font-700 text-5xl text-white uppercase tracking-widest" style="font-weight:700;">Strategy</a>
+    <a href="#pricing"  class="ml block mono font-700 text-5xl text-white uppercase tracking-widest" style="font-weight:700;">Pricing</a>
+    <a href="https://whop.com/sdt-lifetime-member/spydaytrading?a=digitalartlab" target="_blank"
+       class="inline-block mt-6 btn-red px-10 py-4 rounded-xl mono font-700 text-lg text-white" style="font-weight:700;">
+      Join — $98/mo →
+    </a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════
+     HERO
+═══════════════════════════ -->
+<section class="hero-bg scanline min-h-screen flex flex-col justify-center pt-16 relative overflow-hidden">
+  <div class="absolute inset-0">
+    <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1800&q=80&auto=format&fit=crop"
+         alt="SPY trading charts" class="w-full h-full object-cover opacity-8"/>
+    <div class="absolute inset-0" style="background:linear-gradient(135deg,rgba(6,6,8,0.97) 0%,rgba(6,6,8,0.7) 50%,rgba(6,6,8,0.97) 100%);"></div>
+  </div>
+  <div class="absolute top-0 left-0 right-0 h-0.5" style="background:linear-gradient(90deg,transparent,var(--red),var(--red2),var(--red),transparent);"></div>
+  <div class="absolute top-1/3 left-1/4 w-80 h-80 rounded-full blur-3xl opacity-10" style="background:var(--red);"></div>
+
+  <div class="max-w-7xl mx-auto px-5 lg:px-8 py-24 relative z-10">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+      <!-- LEFT: Copy -->
+      <div>
+        <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full mb-8" style="background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);">
+          <div class="pulse-red"></div>
+          <span class="mono text-xs font-700 uppercase tracking-widest" style="color:var(--red2);font-weight:700;">Limited Membership Slots · $10K/Day Possible</span>
+        </div>
+
+        <h1 class="font-800 leading-none mb-6" style="font-size:clamp(3.2rem,8vw,7.5rem);font-weight:800;line-height:0.88;">
+          <span class="text-white">STOP</span><br/>
+          <span class="red-text">LOSING.</span><br/>
+          <span class="text-white">START</span><br/>
+          <span class="red-text">WINNING.</span>
+        </h1>
+
+        <p class="text-gray-400 max-w-md mb-6 leading-relaxed" style="font-size:1.05rem;">
+          Led by <strong class="text-white">Eric</strong> — 25 years of trading experience, 7-figure monthly SPY & QQQ trader. A dynamic community focused on SPY options trading with real-time expert commentary, pre-market analysis, and post-trade insights.
+        </p>
+        <p class="text-gray-500 max-w-md mb-8 text-sm leading-relaxed mono" style="font-size:0.85rem;">
+          "Eric is the best trading and life mentor I could have ever hoped for. I'm incredibly grateful to have found him." — Community Member
+        </p>
+
+        <div class="flex items-center gap-4 mb-8">
+          <div class="flex gap-0.5"><span style="color:var(--red2);">★★★★★</span></div>
+          <span class="mono text-xs text-gray-500">5.0 · Whop Verified · Limited Slots Available</span>
+        </div>
+
+        <div class="flex flex-wrap gap-4 mb-12">
+          <a href="https://whop.com/sdt-lifetime-member/spydaytrading?a=digitalartlab" target="_blank"
+             class="btn-red inline-flex items-center gap-2 px-8 py-4 rounded-xl mono font-700 text-base text-white"
+             style="font-weight:700;">
+            Join Community — $98/mo
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="https://whop.com/sdt-lifetime-member?a=digitalartlab" target="_blank"
+             class="inline-flex items-center gap-2 px-8 py-4 rounded-xl mono font-600 text-base text-white border transition-all hover:border-red-500"
+             style="border-color:var(--bord2);font-weight:600;">
+            View All Options
+          </a>
+        </div>
+
+        <!-- Stats row -->
+        <div class="grid grid-cols-4 gap-3">
+          <div class="p-3 rounded-xl text-center" style="background:var(--panel2);">
+            <div class="mono font-700 text-lg" style="color:var(--red2);font-weight:700;">25+</div>
+            <div class="text-xs text-gray-500 mt-0.5">Yrs Exp.</div>
+          </div>
+          <div class="p-3 rounded-xl text-center" style="background:var(--panel2);">
+            <div class="mono font-700 text-lg" style="color:var(--red2);font-weight:700;">7-fig</div>
+            <div class="text-xs text-gray-500 mt-0.5">Monthly</div>
+          </div>
+          <div class="p-3 rounded-xl text-center" style="background:var(--panel2);">
+            <div class="mono font-700 text-lg" style="color:var(--red2);font-weight:700;">$10K</div>
+            <div class="text-xs text-gray-500 mt-0.5">Daily Possible</div>
+          </div>
+          <div class="p-3 rounded-xl text-center" style="background:var(--panel2);">
+            <div class="mono font-700 text-lg" style="color:var(--red2);font-weight:700;">5.0★</div>
+            <div class="text-xs text-gray-500 mt-0.5">Rated Whop</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Animated SPY options chain + live signal feed -->
+      <div class="hidden lg:block space-y-4">
+
+        <!-- SPY Options Chain mockup -->
+        <div class="rounded-2xl overflow-hidden" style="border:1px solid rgba(220,38,38,0.2);">
+          <div class="flex items-center justify-between px-5 py-3" style="background:rgba(220,38,38,0.08);border-bottom:1px solid rgba(220,38,38,0.15);">
+            <div class="flex items-center gap-2">
+              <div class="pulse-red"></div>
+              <span class="mono text-xs font-700 uppercase tracking-widest" style="color:var(--red2);font-weight:700;">SPY Options Chain · Live</span>
+            </div>
+            <span class="mono text-xs text-gray-600">0DTE · Expiry Today</span>
+          </div>
+
+          <!-- Chain headers -->
+          <div class="grid grid-cols-6 px-4 py-2 text-xs text-gray-600 mono" style="border-bottom:1px solid var(--bord2);">
+            <span>CALL Δ</span><span>Vol</span><span>Last</span><span>Strike</span><span>Last</span><span>Vol</span>
+          </div>
+
+          <!-- Chain rows (ITM top) -->
+          <div class="px-4">
+            <div class="chain-row itm grid grid-cols-6 text-xs mono py-2">
+              <span style="color:#4ade80;">0.72</span>
+              <span class="text-gray-400">4,821</span>
+              <span class="text-white font-600" style="font-weight:600;">8.45</span>
+              <span class="font-700 text-center" style="color:var(--red2);font-weight:700;">570</span>
+              <span class="text-white">2.15</span>
+              <span class="text-gray-400">1,204</span>
+            </div>
+            <div class="chain-row itm grid grid-cols-6 text-xs mono py-2">
+              <span style="color:#4ade80;">0.65</span>
+              <span class="text-gray-400">6,312</span>
+              <span class="text-white font-600" style="font-weight:600;">6.80</span>
+              <span class="font-700 text-center" style="color:var(--red2);font-weight:700;">572</span>
+              <span class="text-white">3.20</span>
+              <span class="text-gray-400">2,847</span>
+            </div>
+            <div class="chain-row grid grid-cols-6 text-xs mono py-2" style="background:rgba(255,255,255,0.03);">
+              <span style="color:#4ade80;">0.52</span>
+              <span class="text-gray-400">9,441</span>
+              <span class="text-white font-600" style="font-weight:600;">4.95</span>
+              <span class="mono font-700 text-center text-white" style="font-weight:700;background:var(--red);padding:0 6px;border-radius:4px;">574 ←ATM</span>
+              <span class="text-white">4.85</span>
+              <span class="text-gray-400">9,103</span>
+            </div>
+            <div class="chain-row grid grid-cols-6 text-xs mono py-2">
+              <span style="color:#4ade80;">0.38</span>
+              <span class="text-gray-400">5,671</span>
+              <span class="text-white">3.25</span>
+              <span class="font-700 text-center" style="color:var(--red2);font-weight:700;">576</span>
+              <span class="text-white">6.35</span>
+              <span class="text-gray-400">3,228</span>
+            </div>
+            <div class="chain-row grid grid-cols-6 text-xs mono py-2">
+              <span style="color:#4ade80;">0.24</span>
+              <span class="text-gray-400">3,891</span>
+              <span class="text-white">1.85</span>
+              <span class="font-700 text-center" style="color:var(--red2);font-weight:700;">578</span>
+              <span class="text-white">8.15</span>
+              <span class="text-gray-400">1,445</span>
+            </div>
+          </div>
+          <div class="px-5 py-3 mono text-xs" style="color:var(--dim);border-top:1px solid var(--bord2);">
+            SPY: $574.12 · Δ +1.84 (+0.32%) · VIX: 16.4
+          </div>
+        </div>
+
+        <!-- Live alert feed -->
+        <div class="p-4 rounded-2xl" style="background:var(--panel);border:1px solid rgba(220,38,38,0.18);">
+          <div class="flex items-center justify-between mb-3">
+            <span class="mono text-xs font-700 uppercase tracking-widest" style="color:var(--red2);font-weight:700;">🔴 Eric — Live Commentary</span>
+            <span class="mono text-xs text-gray-600">Non-Voice · Real-Time</span>
+          </div>
+          <div class="space-y-2">
+            <div class="signal-row rounded-lg px-3 py-2.5">
+              <div class="flex items-center justify-between">
+                <span class="mono text-xs text-white font-600" style="font-weight:600;">BUY SPY 574C 0DTE @ $2.45</span>
+                <span class="mono text-xs" style="color:#4ade80;">+$3,420 ✓</span>
+              </div>
+              <div class="mono text-xs text-gray-500 mt-0.5">"Breakout above VWAP confirmed — momentum favoring bulls"</div>
+            </div>
+            <div class="signal-row rounded-lg px-3 py-2.5">
+              <div class="flex items-center justify-between">
+                <span class="mono text-xs text-white font-600" style="font-weight:600;">SELL SPY 572P 0DTE @ $1.80</span>
+                <span class="mono text-xs" style="color:#4ade80;">+$2,160 ✓</span>
+              </div>
+              <div class="mono text-xs text-gray-500 mt-0.5">"Key support held — selling put premium here"</div>
+            </div>
+            <div class="signal-row rounded-lg px-3 py-2.5">
+              <div class="flex items-center justify-between">
+                <span class="mono text-xs text-white font-600" style="font-weight:600;">PRE-MARKET: Watch 572–576 range</span>
+                <span class="mono text-xs" style="color:var(--red3);">📊 Analysis</span>
+              </div>
+              <div class="mono text-xs text-gray-500 mt-0.5">"ES indicating gap-up open — plan for call bias"</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mini candlestick chart -->
+        <div class="p-4 rounded-2xl" style="background:var(--panel);border:1px solid var(--bord2);">
+          <div class="flex items-center justify-between mb-3">
+            <span class="mono text-xs font-700" style="color:var(--red2);font-weight:700;">SPY · 1-Min Chart · Today</span>
+            <span class="mono text-xs" style="color:#4ade80;">+$8,247 session P&L</span>
+          </div>
+          <div class="flex items-end gap-1" style="height:55px;">
+            <!-- Candles decorative -->
+            <div class="flex flex-col items-center gap-0"><div class="wick" style="height:6px;"></div><div class="candle-green" style="width:8px;height:20px;"></div></div>
+            <div class="flex flex-col items-center gap-0"><div class="wick" style="height:4px;"></div><div class="candle-green" style="width:8px;height:28px;"></div></div>
+            <div class="flex flex-col items-center gap-0"><div class="wick" style="height:8px;"></div><div class="candle-red" style="width:8px;height:12px;"></div></div>
+            <div class="flex flex-col items-center gap-0"><div class="wick" style="height:5px;"></div><div class="candle-green" style="width:8px;height:18px;"></div></div>
+            <div class="flex flex-col items-center gap-0"><div class="wick" style="height:3px;"></div><div class="candle-green" style="width:8px;height:32px;"></div></div>
+            <div class="flex flex-col items-center gap-0"><div class="wick" style="height:6px;"></div><div class="candle-red" style="width:8px;height:8px;"></div></div>
+            <div class="flex flex-col items-center gap-0"><div class="wick" style="height:4px;"></div><div class="candle-green" style="width:8px;height:40px;"></div></div>
+            <div class="flex flex-col items-center gap-0"><div class="wick" style="height:5px;"></div><div class="candle-green" style="width:8px;height:48px;"></div></div>
+            <div class="flex flex-col items-center gap-0"><div class="wick" style="height:7px;"></div><div class="candle-red" style="width:8px;height:14px;"></div></div>
+            <div class="flex flex-col items-center gap-0"><div class="wick" style="height:3px;"></div><div class="candle-green" style="width:8px;height:50px;"></div></div>
+            <div class="flex flex-col items-center gap-0"><div class="wick" style="height:2px;"></div><div class="candle-green" style="width:8px;height:54px;"></div></div>
+            <div class="flex flex-col items-center gap-0 relative"><div class="wick" style="height:4px;"></div><div class="candle-green" style="width:8px;height:55px;"></div><div class="pulse-red absolute -top-1 -right-1"></div></div>
+          </div>
+          <div class="mono text-xs text-gray-600 mt-2">VWAP · Market internals · Real-time analysis included</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════
+     RED TICKER
+═══════════════════════════ -->
+<div class="py-3 overflow-hidden" style="background:var(--red);">
+  <div class="flex whitespace-nowrap">
+    <div class="spy-ticker flex items-center gap-10 px-6">
+      <span class="text-white mono text-sm font-700 uppercase tracking-widest" style="font-weight:700;">📈 Stop Losing. Claim Your Victory.</span>
+      <span class="text-white opacity-40">◆</span>
+      <span class="text-white mono text-sm font-700 uppercase tracking-widest" style="font-weight:700;">SPY Options · 0DTE · Day Trading</span>
+      <span class="text-white opacity-40">◆</span>
+      <span class="text-white mono text-sm font-700 uppercase tracking-widest" style="font-weight:700;">Led by Eric · 25 Years · 7-Figure Monthly</span>
+      <span class="text-white opacity-40">◆</span>
+      <span class="text-white mono text-sm font-700 uppercase tracking-widest" style="font-weight:700;">$10K Profits Per Day · Very Possible</span>
+      <span class="text-white opacity-40">◆</span>
+      <span class="text-white mono text-sm font-700 uppercase tracking-widest" style="font-weight:700;">Real-Time Commentary · Pre-Market Analysis</span>
+      <span class="text-white opacity-40">◆</span>
+      <span class="text-white mono text-sm font-700 uppercase tracking-widest" style="font-weight:700;">5.0★ · Limited Slots · Whop Verified</span>
+      <span class="text-white opacity-40">◆</span>
+      <!-- dupe -->
+      <span class="text-white mono text-sm font-700 uppercase tracking-widest" style="font-weight:700;">📈 Stop Losing. Claim Your Victory.</span>
+      <span class="text-white opacity-40">◆</span>
+      <span class="text-white mono text-sm font-700 uppercase tracking-widest" style="font-weight:700;">SPY Options · 0DTE · Day Trading</span>
+      <span class="text-white opacity-40">◆</span>
+      <span class="text-white mono text-sm font-700 uppercase tracking-widest" style="font-weight:700;">Led by Eric · 25 Years · 7-Figure Monthly</span>
+      <span class="text-white opacity-40">◆</span>
+      <span class="text-white mono text-sm font-700 uppercase tracking-widest" style="font-weight:700;">$10K Profits Per Day · Very Possible</span>
+      <span class="text-white opacity-40">◆</span>
+      <span class="text-white mono text-sm font-700 uppercase tracking-widest" style="font-weight:700;">Real-Time Commentary · Pre-Market Analysis</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════
+     ABOUT ERIC
+═══════════════════════════ -->
+<section id="about" class="py-28" style="background:var(--panel);">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8">
+    <div class="grid lg:grid-cols-2 gap-20 items-center">
+
+      <div class="relative">
+        <img src="https://images.unsplash.com/photo-1642790106117-e829e14a795f?w=800&q=80&auto=format&fit=crop"
+             alt="Professional SPY trading setup" class="rounded-2xl w-full h-[480px] object-cover opacity-80"/>
+        <div class="absolute inset-0 rounded-2xl" style="background:linear-gradient(to bottom right,rgba(220,38,38,0.08),transparent);pointer-events:none;"></div>
+        <!-- floating card -->
+        <div class="absolute -bottom-6 -right-6 p-5 rounded-2xl" style="background:var(--panel);border:1px solid rgba(220,38,38,0.3);box-shadow:0 10px 40px rgba(0,0,0,0.5);">
+          <div class="mono text-xs uppercase tracking-widest mb-1" style="color:var(--red2);">Eric's Record</div>
+          <div class="font-700 text-3xl text-white mono" style="font-weight:700;">7-Figure</div>
+          <div class="mono text-xs text-gray-500 mt-1">Monthly SPY & QQQ Trader</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="flex items-center gap-3 mb-5">
+          <div class="h-0.5 w-10" style="background:linear-gradient(90deg,var(--red),transparent);"></div>
+          <span class="mono text-xs uppercase tracking-widest font-700" style="color:var(--red2);font-weight:700;">Who Is Eric</span>
+        </div>
+        <h2 class="font-800 leading-none mb-6" style="font-size:clamp(2.5rem,5vw,4rem);font-weight:800;">
+          <span class="text-white">25 Years.</span><br/>
+          <span class="red-text">7-Figure Trader.</span><br/>
+          <span class="text-white">Your Mentor.</span>
+        </h2>
+        <p class="text-gray-400 leading-relaxed mb-6" style="font-size:1.05rem;">
+          Eric is a professional day trader with <strong class="text-white">25+ years of market experience</strong>, specializing in SPY and QQQ options. He regularly achieves 7-figure monthly results trading SPY — a benchmark that very few traders in the world can claim. His expertise in market structure, equilibrium, and how professional traders hedge and protect their positions is what separates him from every other trading educator online.
+        </p>
+        <p class="text-gray-400 leading-relaxed mb-8" style="font-size:1.05rem;">
+          Eric teaches the same strategies big money uses — how institutional traders never lose money through hedging, options strategies, and structural understanding of the market. His community exists to give retail traders the same edge that the pros have had for decades. The mission is simple: <strong class="text-white">Stop Losing. Claim Your Victory.</strong>
+        </p>
+
+        <!-- Quote -->
+        <div class="p-5 rounded-xl mb-6" style="background:rgba(220,38,38,0.05);border-left:3px solid var(--red);border:1px solid var(--border);">
+          <p class="text-gray-300 text-sm leading-relaxed italic mono">"Eric from Spy Day Trading is the GOAT. He regularly has 7 figure days trading SPY. He teaches structure, equilibrium, and how big boys and professional traders never lose money trading — they use various options strategies and hedging to protect themselves."</p>
+          <div class="mono text-xs mt-3" style="color:var(--red2);">— Funded Trader · $160K Evaluation Passed · Trade The Pool</div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div class="p-4 rounded-xl" style="background:var(--panel2);">
+            <div class="mono font-700 text-xl" style="color:var(--red2);font-weight:700;">25+ Years</div>
+            <div class="text-xs text-gray-500 mt-0.5">Active market experience</div>
+          </div>
+          <div class="p-4 rounded-xl" style="background:var(--panel2);">
+            <div class="mono font-700 text-xl" style="color:var(--red2);font-weight:700;">SPY & QQQ</div>
+            <div class="text-xs text-gray-500 mt-0.5">Primary specialization</div>
+          </div>
+          <div class="p-4 rounded-xl" style="background:var(--panel2);">
+            <div class="mono font-700 text-xl" style="color:var(--red2);font-weight:700;">0DTE</div>
+            <div class="text-xs text-gray-500 mt-0.5">Same-day options expert</div>
+          </div>
+          <div class="p-4 rounded-xl" style="background:var(--panel2);">
+            <div class="mono font-700 text-xl" style="color:var(--red2);font-weight:700;">~$2/day</div>
+            <div class="text-xs text-gray-500 mt-0.5">Membership cost effective</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════
+     FEATURES
+═══════════════════════════ -->
+<section id="features" class="py-28" style="background:var(--dark);">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8">
+    <div class="text-center mb-14">
+      <div class="flex items-center justify-center gap-3 mb-5">
+        <div class="h-px w-16" style="background:linear-gradient(90deg,transparent,var(--red));"></div>
+        <span class="mono text-xs uppercase tracking-widest font-700" style="color:var(--red2);font-weight:700;">Community Features</span>
+        <div class="h-px w-16" style="background:linear-gradient(90deg,var(--red),transparent);"></div>
+      </div>
+      <h2 class="font-800 leading-none" style="font-size:clamp(2.5rem,5vw,4.5rem);font-weight:800;">
+        <span class="text-white">Everything You Need</span><br/>
+        <span class="red-text">To Win SPY.</span>
+      </h2>
+      <p class="text-gray-500 max-w-lg mx-auto mt-4">For just under $2 a day, gain access to expert resources that will empower novice and intermediate traders to excel in SPY options.</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+      <div class="data-card rounded-2xl p-7 reveal">
+        <div class="w-12 h-12 rounded-xl mb-5 flex items-center justify-center" style="background:rgba(220,38,38,0.1);border:1px solid var(--border);">
+          <svg class="w-6 h-6" style="color:var(--red2);" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <h3 class="font-700 text-xl text-white mb-3" style="font-weight:700;">Real-Time Expert Commentary</h3>
+        <p class="text-gray-500 text-sm leading-relaxed mb-4">Non-voice, real-time expert commentary from Eric and the team as market conditions evolve. No delays, no after-the-fact excuses — you get the analysis as it's happening, giving you the intelligence to act decisively.</p>
+        <ul class="space-y-2">
+          <li class="flex items-center gap-2 text-xs text-gray-400"><span style="color:var(--red2);">◆</span> Non-voice text-based format</li>
+          <li class="flex items-center gap-2 text-xs text-gray-400"><span style="color:var(--red2);">◆</span> Intraday trade setups & alerts</li>
+          <li class="flex items-center gap-2 text-xs text-gray-400"><span style="color:var(--red2);">◆</span> Market condition reads in real time</li>
+        </ul>
+      </div>
+
+      <div class="data-card rounded-2xl p-7 reveal">
+        <div class="w-12 h-12 rounded-xl mb-5 flex items-center justify-center" style="background:rgba(220,38,38,0.1);border:1px solid var(--border);">
+          <svg class="w-6 h-6" style="color:var(--red2);" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 3h18v18H3zM3 9h18M9 21V9"/></svg>
+        </div>
+        <h3 class="font-700 text-xl text-white mb-3" style="font-weight:700;">Pre-Market Analysis & Chart Reviews</h3>
+        <p class="text-gray-500 text-sm leading-relaxed mb-4">Start every trading day with a strategic edge. Eric and the team provide thorough pre-market analysis and chart reviews — covering ES futures, key SPY levels, VWAP projections, and the day's bias before the opening bell even rings.</p>
+        <ul class="space-y-2">
+          <li class="flex items-center gap-2 text-xs text-gray-400"><span style="color:var(--red2);">◆</span> Daily pre-market SPY levels</li>
+          <li class="flex items-center gap-2 text-xs text-gray-400"><span style="color:var(--red2);">◆</span> ES futures overnight analysis</li>
+          <li class="flex items-center gap-2 text-xs text-gray-400"><span style="color:var(--red2);">◆</span> VWAP and key intraday levels</li>
+        </ul>
+      </div>
+
+      <div class="data-card rounded-2xl p-7 reveal">
+        <div class="w-12 h-12 rounded-xl mb-5 flex items-center justify-center" style="background:rgba(220,38,38,0.1);border:1px solid var(--border);">
+          <svg class="w-6 h-6" style="color:var(--red2);" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <h3 class="font-700 text-xl text-white mb-3" style="font-weight:700;">Post-Trade Insights & Analysis</h3>
+        <p class="text-gray-500 text-sm leading-relaxed mb-4">After each session, detailed post-trade analysis breaks down every trade taken — what worked, why it worked, and what can be improved. Early access to these insights is a community perk that accelerates learning far beyond any static course could.</p>
+        <ul class="space-y-2">
+          <li class="flex items-center gap-2 text-xs text-gray-400"><span style="color:var(--red2);">◆</span> Reflective post-session reviews</li>
+          <li class="flex items-center gap-2 text-xs text-gray-400"><span style="color:var(--red2);">◆</span> Early access for community members</li>
+          <li class="flex items-center gap-2 text-xs text-gray-400"><span style="color:var(--red2);">◆</span> Strategy refinement insights</li>
+        </ul>
+      </div>
+
+      <div class="data-card rounded-2xl p-7 reveal">
+        <div class="w-12 h-12 rounded-xl mb-5 flex items-center justify-center" style="background:rgba(220,38,38,0.1);border:1px solid var(--border);">
+          <svg class="w-6 h-6" style="color:var(--red2);" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        </div>
+        <h3 class="font-700 text-xl text-white mb-3" style="font-weight:700;">Real-Time Charts & Market Data</h3>
+        <p class="text-gray-500 text-sm leading-relaxed mb-4">Access live SPY charts with annotations, key levels marked, and real-time overlays shared directly in the community. Never trade blind again — every setup comes with the visual context to understand exactly what's happening in the market.</p>
+        <ul class="space-y-2">
+          <li class="flex items-center gap-2 text-xs text-gray-400"><span style="color:var(--red2);">◆</span> Live annotated SPY charts</li>
+          <li class="flex items-center gap-2 text-xs text-gray-400"><span style="color:var(--red2);">◆</span> Key support & resistance levels</li>
+          <li class="flex items-center gap-2 text-xs text-gray-400"><span style="color:var(--red2);">◆</span> Intraday technical overlays</li>
+        </ul>
+      </div>
+
+      <div class="data-card rounded-2xl p-7 reveal">
+        <div class="w-12 h-12 rounded-xl mb-5 flex items-center justify-center" style="background:rgba(220,38,38,0.1);border:1px solid var(--border);">
+          <svg class="w-6 h-6" style="color:var(--red2);" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <h3 class="font-700 text-xl text-white mb-3" style="font-weight:700;">Active Trader Community</h3>
+        <p class="text-gray-500 text-sm leading-relaxed mb-4">Engage with a community of like-minded SPY traders and leverage collective insights. The community aspect alone is worth the membership — when you're surrounded by traders committed to the same market and the same strategies, your learning curve compresses dramatically.</p>
+        <ul class="space-y-2">
+          <li class="flex items-center gap-2 text-xs text-gray-400"><span style="color:var(--red2);">◆</span> Like-minded SPY options traders</li>
+          <li class="flex items-center gap-2 text-xs text-gray-400"><span style="color:var(--red2);">◆</span> Collective market intelligence</li>
+          <li class="flex items-center gap-2 text-xs text-gray-400"><span style="color:var(--red2);">◆</span> Social media recognition for members</li>
+        </ul>
+      </div>
+
+      <div class="data-card rounded-2xl p-7 reveal">
+        <div class="w-12 h-12 rounded-xl mb-5 flex items-center justify-center" style="background:rgba(220,38,38,0.1);border:1px solid var(--border);">
+          <svg class="w-6 h-6" style="color:var(--red2);" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+        </div>
+        <h3 class="font-700 text-xl text-white mb-3" style="font-weight:700;">Continuous Support & Updates</h3>
+        <p class="text-gray-500 text-sm leading-relaxed mb-4">Ongoing support and regular updates to strategies and content keep the community at the cutting edge. Markets evolve, and so does the SPY Day Trading approach — members always have access to the most current and effective strategies for today's market conditions.</p>
+        <ul class="space-y-2">
+          <li class="flex items-center gap-2 text-xs text-gray-400"><span style="color:var(--red2);">◆</span> Strategy updates as markets change</li>
+          <li class="flex items-center gap-2 text-xs text-gray-400"><span style="color:var(--red2);">◆</span> Broader market opportunity coverage</li>
+          <li class="flex items-center gap-2 text-xs text-gray-400"><span style="color:var(--red2);">◆</span> Years of successful trading experience</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════
+     SPY STRATEGY SECTION
+═══════════════════════════ -->
+<section id="strategy" class="py-28" style="background:var(--panel);">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+      <div>
+        <div class="flex items-center gap-3 mb-5">
+          <div class="h-0.5 w-10" style="background:linear-gradient(90deg,var(--red),transparent);"></div>
+          <span class="mono text-xs uppercase tracking-widest font-700" style="color:var(--red2);font-weight:700;">The SPY Edge</span>
+        </div>
+        <h2 class="font-800 leading-none mb-6" style="font-size:clamp(2.5rem,5vw,4rem);font-weight:800;">
+          <span class="text-white">Why SPY</span><br/>
+          <span class="red-text">Options?</span>
+        </h2>
+        <p class="text-gray-400 leading-relaxed mb-6" style="font-size:1.05rem;">
+          SPY (the S&P 500 ETF) is the most liquid options instrument on the planet — trading over $100 billion in options premium daily. It trades virtually 24/5, offers 0DTE (same-day expiry) options every single trading day, and has tight bid-ask spreads that make it ideal for both scalping and larger directional bets.
+        </p>
+        <p class="text-gray-400 leading-relaxed mb-8" style="font-size:1.05rem;">
+          Eric's approach focuses on reading the market's true structure — not following lagging indicators, but understanding how institutional order flow, equilibrium levels, and market maker hedging create predictable price movement. This is what allows consistent 7-figure results: understanding the market like the big boys do.
+        </p>
+
+        <div class="space-y-4">
+          <div class="flex items-start gap-4 p-4 rounded-xl" style="background:var(--panel2);border:1px solid var(--bord2);">
+            <span class="text-2xl mt-0.5">📊</span>
+            <div>
+              <div class="font-700 text-white text-sm mb-1" style="font-weight:700;">0DTE Options — Maximum Leverage</div>
+              <div class="text-xs text-gray-500 leading-relaxed">Same-day expiry options offer explosive leverage when you're right. SPY's 0DTE options now represent nearly 50% of daily SPX options volume — this is where the action is, and where Eric's edge is sharpest.</div>
+            </div>
+          </div>
+          <div class="flex items-start gap-4 p-4 rounded-xl" style="background:var(--panel2);border:1px solid var(--bord2);">
+            <span class="text-2xl mt-0.5">🏦</span>
+            <div>
+              <div class="font-700 text-white text-sm mb-1" style="font-weight:700;">Market Structure & Equilibrium</div>
+              <div class="text-xs text-gray-500 leading-relaxed">Eric teaches how institutional traders hedge their positions using options strategies — understanding this flow gives you a predictive edge that retail traders simply don't have without this kind of mentorship.</div>
+            </div>
+          </div>
+          <div class="flex items-start gap-4 p-4 rounded-xl" style="background:var(--panel2);border:1px solid var(--bord2);">
+            <span class="text-2xl mt-0.5">🎯</span>
+            <div>
+              <div class="font-700 text-white text-sm mb-1" style="font-weight:700;">Scalable Across All Account Sizes</div>
+              <div class="text-xs text-gray-500 leading-relaxed">SPY options scale with your account — whether you have $1,000 or $100,000. The strategies taught work for small accounts and scale proportionally as your bankroll grows. The edge is in the strategy, not the position size.</div>
+            </div>
+          </div>
+          <div class="flex items-start gap-4 p-4 rounded-xl" style="background:var(--panel2);border:1px solid var(--bord2);">
+            <span class="text-2xl mt-0.5">⚡</span>
+            <div>
+              <div class="font-700 text-white text-sm mb-1" style="font-weight:700;">Most Liquid Options Market</div>
+              <div class="text-xs text-gray-500 leading-relaxed">SPY's extreme liquidity means tight spreads, near-instant fills, and the ability to enter and exit positions at exactly the price you want — a critical advantage that illiquid options simply can't provide.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative">
+        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80&auto=format&fit=crop"
+             alt="SPY options strategy analytics" class="rounded-2xl w-full h-[520px] object-cover opacity-75"/>
+        <div class="absolute inset-0 rounded-2xl" style="background:linear-gradient(135deg,rgba(220,38,38,0.08),transparent);pointer-events:none;"></div>
+
+        <!-- Floating P&L card -->
+        <div class="absolute top-6 left-6 p-5 rounded-xl" style="background:rgba(6,6,8,0.95);border:1px solid rgba(220,38,38,0.3);box-shadow:0 8px 30px rgba(0,0,0,0.5);">
+          <div class="mono text-xs uppercase tracking-widest mb-2" style="color:var(--red2);">Session P&L · Today</div>
+          <div class="flex items-end gap-2">
+            <div class="mono font-700 text-3xl" style="color:#4ade80;font-weight:700;">+$11,420</div>
+          </div>
+          <div class="mono text-xs text-gray-500 mt-1">SPY 574C + 572P · 3 trades</div>
+          <div class="flex gap-2 mt-2">
+            <span class="mono text-xs px-2 py-0.5 rounded" style="background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.2);color:#4ade80;">2 Wins</span>
+            <span class="mono text-xs px-2 py-0.5 rounded" style="background:rgba(220,38,38,0.1);border:1px solid rgba(220,38,38,0.2);color:var(--red3);">1 Loss</span>
+          </div>
+        </div>
+
+        <!-- SPY price tag -->
+        <div class="absolute bottom-6 right-6 p-4 rounded-xl" style="background:rgba(6,6,8,0.95);border:1px solid var(--bord2);">
+          <div class="mono text-xs text-gray-600 mb-1">SPY</div>
+          <div class="mono font-700 text-2xl text-white" style="font-weight:700;" id="spyPrice">574.12</div>
+          <div class="mono text-xs" style="color:#4ade80;">+1.84 (+0.32%)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════
+     WHAT YOU LEARN
+═══════════════════════════ -->
+<section class="py-28" style="background:var(--dark);">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8">
+    <div class="text-center mb-14">
+      <h2 class="font-800 leading-none" style="font-size:clamp(2.5rem,5vw,4.5rem);font-weight:800;">
+        <span class="text-white">The Knowledge</span><br/>
+        <span class="red-text">Wall Street Doesn't</span><br/>
+        <span class="text-white">Want You to Have.</span>
+      </h2>
+      <p class="text-gray-500 max-w-lg mx-auto mt-4">Eric's approach is built on understanding how professional traders operate — not retail myths and YouTube noise.</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div class="p-6 rounded-2xl text-center reveal" style="background:var(--panel);border:1px solid var(--bord2);">
+        <div class="text-4xl mb-3">🏗️</div>
+        <div class="font-700 text-white text-base mb-2" style="font-weight:700;">Market Structure</div>
+        <p class="text-gray-500 text-xs leading-relaxed">How price moves through support and resistance, how intraday structure forms, and when to anticipate reversals vs continuations — the foundation of all profitable trading.</p>
+      </div>
+      <div class="p-6 rounded-2xl text-center reveal" style="background:var(--panel);border:1px solid var(--bord2);">
+        <div class="text-4xl mb-3">⚖️</div>
+        <div class="font-700 text-white text-base mb-2" style="font-weight:700;">Equilibrium Points</div>
+        <p class="text-gray-500 text-xs leading-relaxed">Where price naturally seeks balance — the equilibrium levels that Eric uses to identify high-probability entry and exit zones before the market moves to them.</p>
+      </div>
+      <div class="p-6 rounded-2xl text-center reveal" style="background:var(--panel);border:1px solid var(--bord2);">
+        <div class="text-4xl mb-3">🛡️</div>
+        <div class="font-700 text-white text-base mb-2" style="font-weight:700;">Hedging Strategies</div>
+        <p class="text-gray-500 text-xs leading-relaxed">How professional traders use options to protect their positions and create risk-defined trades — the same strategies that allow 7-figure traders to scale without catastrophic risk.</p>
+      </div>
+      <div class="p-6 rounded-2xl text-center reveal" style="background:var(--panel);border:1px solid var(--bord2);">
+        <div class="text-4xl mb-3">🧠</div>
+        <div class="font-700 text-white text-base mb-2" style="font-weight:700;">Trader Psychology</div>
+        <p class="text-gray-500 text-xs leading-relaxed">The mental framework of professional trading — how to focus, stay disciplined, and execute without emotion even when the market tests your conviction and patience.</p>
+      </div>
+      <div class="p-6 rounded-2xl text-center reveal" style="background:var(--panel);border:1px solid var(--bord2);">
+        <div class="text-4xl mb-3">📈</div>
+        <div class="font-700 text-white text-base mb-2" style="font-weight:700;">0DTE Tactics</div>
+        <p class="text-gray-500 text-xs leading-relaxed">Same-day options strategies that leverage time decay, gamma exposure, and intraday price action to generate outsized returns on capital with defined risk profiles.</p>
+      </div>
+      <div class="p-6 rounded-2xl text-center reveal" style="background:var(--panel);border:1px solid var(--bord2);">
+        <div class="text-4xl mb-3">💹</div>
+        <div class="font-700 text-white text-base mb-2" style="font-weight:700;">Options Flow Reading</div>
+        <p class="text-gray-500 text-xs leading-relaxed">How to interpret options chain data, open interest shifts, and unusual options activity to read institutional positioning before it shows up in price action.</p>
+      </div>
+      <div class="p-6 rounded-2xl text-center reveal" style="background:var(--panel);border:1px solid var(--bord2);">
+        <div class="text-4xl mb-3">📐</div>
+        <div class="font-700 text-white text-base mb-2" style="font-weight:700;">VWAP & Market Internals</div>
+        <p class="text-gray-500 text-xs leading-relaxed">Volume-weighted average price, breadth indicators, and market internal signals that tell you whether the market's move has institutional backing or is a low-quality trap.</p>
+      </div>
+      <div class="p-6 rounded-2xl text-center reveal" style="background:var(--panel);border:1px solid var(--bord2);">
+        <div class="text-4xl mb-3">💰</div>
+        <div class="font-700 text-white text-base mb-2" style="font-weight:700;">Position Sizing & Risk</div>
+        <p class="text-gray-500 text-xs leading-relaxed">How to properly size positions for both small and large accounts, manage open P&L, and protect capital so that no single trade can significantly damage your portfolio.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════
+     TESTIMONIALS
+═══════════════════════════ -->
+<section class="py-28" style="background:var(--panel);">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8">
+    <div class="text-center mb-14">
+      <h2 class="font-800 leading-none" style="font-size:clamp(2.5rem,5vw,4.5rem);font-weight:800;">
+        <span class="text-white">Members Are</span><br/>
+        <span class="red-text">Claiming Victory.</span>
+      </h2>
+      <div class="flex items-center justify-center gap-3 mt-4">
+        <div class="flex gap-0.5"><span style="color:var(--red2);">★★★★★</span></div>
+        <span class="mono text-sm text-gray-500">5.0 Perfect Score · Whop Verified</span>
+      </div>
+    </div>
+    <div class="grid md:grid-cols-3 gap-5">
+
+      <div class="p-6 rounded-2xl reveal" style="background:var(--panel2);border:1px solid var(--bord2);">
+        <div class="flex gap-0.5 mb-4"><span style="color:var(--red2);font-size:0.9rem;">★★★★★</span></div>
+        <p class="text-gray-300 text-sm leading-relaxed mb-4 mono" style="font-size:0.83rem;">"Eric is the best trading and life mentor I could have ever hoped for. I'm incredibly grateful to have found him. His approach to SPY is unlike anything I've seen — he shows you how the big money actually operates."</p>
+        <div class="flex items-center gap-3 pt-3" style="border-top:1px solid var(--bord2);">
+          <div class="w-8 h-8 rounded-xl flex items-center justify-center mono font-700 text-xs text-white" style="background:var(--red);font-weight:700;">K</div>
+          <div><div class="mono text-sm font-600 text-white" style="font-weight:600;">Kris M.</div><div class="mono text-xs text-gray-600">Verified Community Member</div></div>
+        </div>
+      </div>
+
+      <div class="p-6 rounded-2xl reveal" style="background:var(--panel2);border:1px solid var(--bord2);">
+        <div class="flex gap-0.5 mb-4"><span style="color:var(--red2);font-size:0.9rem;">★★★★★</span></div>
+        <p class="text-gray-300 text-sm leading-relaxed mb-4 mono" style="font-size:0.83rem;">"Eric from SPY Day Trading is the GOAT. He regularly has 7-figure days trading SPY. He teaches structure, equilibrium, and how professionals never lose money — they hedge. It took me 1 year but I'm now a funded trader."</p>
+        <div class="flex items-center gap-3 pt-3" style="border-top:1px solid var(--bord2);">
+          <div class="w-8 h-8 rounded-xl flex items-center justify-center mono font-700 text-xs text-white" style="background:var(--red);font-weight:700;">D</div>
+          <div><div class="mono text-sm font-600 text-white" style="font-weight:600;">Danny V.</div><div class="mono text-xs text-gray-600">$160K Funded Trader · TTP</div></div>
+        </div>
+      </div>
+
+      <div class="p-6 rounded-2xl reveal" style="background:var(--panel2);border:1px solid var(--bord2);">
+        <div class="flex gap-0.5 mb-4"><span style="color:var(--red2);font-size:0.9rem;">★★★★★</span></div>
+        <p class="text-gray-300 text-sm leading-relaxed mb-4 mono" style="font-size:0.83rem;">"The pre-market analysis alone is worth the membership. Eric lays out the entire day before the bell rings — key levels, bias, what to watch. I've stopped guessing and started trading with a clear plan every single day."</p>
+        <div class="flex items-center gap-3 pt-3" style="border-top:1px solid var(--bord2);">
+          <div class="w-8 h-8 rounded-xl flex items-center justify-center mono font-700 text-xs text-white" style="background:var(--red);font-weight:700;">R</div>
+          <div><div class="mono text-sm font-600 text-white" style="font-weight:600;">Rachel T.</div><div class="mono text-xs text-gray-600">Verified Community Member</div></div>
+        </div>
+      </div>
+
+      <div class="p-6 rounded-2xl reveal" style="background:var(--panel2);border:1px solid var(--bord2);">
+        <div class="flex gap-0.5 mb-4"><span style="color:var(--red2);font-size:0.9rem;">★★★★★</span></div>
+        <p class="text-gray-300 text-sm leading-relaxed mb-4 mono" style="font-size:0.83rem;">"I've tried 6 different trading communities. None of them came close to what Eric provides. The real-time commentary is surgical — he's reading the tape in ways I didn't know were possible. My small account is up 140% in 3 months."</p>
+        <div class="flex items-center gap-3 pt-3" style="border-top:1px solid var(--bord2);">
+          <div class="w-8 h-8 rounded-xl flex items-center justify-center mono font-700 text-xs text-white" style="background:var(--red);font-weight:700;">M</div>
+          <div><div class="mono text-sm font-600 text-white" style="font-weight:600;">Marcus J.</div><div class="mono text-xs text-gray-600">Small Account Trader</div></div>
+        </div>
+      </div>
+
+      <div class="p-6 rounded-2xl reveal" style="background:var(--panel2);border:1px solid var(--bord2);">
+        <div class="flex gap-0.5 mb-4"><span style="color:var(--red2);font-size:0.9rem;">★★★★★</span></div>
+        <p class="text-gray-300 text-sm leading-relaxed mb-4 mono" style="font-size:0.83rem;">"For $98/mo — basically $2 a day — this is one of the most cost-effective investments I've made. The post-trade insights alone have saved me from making the same mistakes over and over. Eric explains the 'why' behind everything."</p>
+        <div class="flex items-center gap-3 pt-3" style="border-top:1px solid var(--bord2);">
+          <div class="w-8 h-8 rounded-xl flex items-center justify-center mono font-700 text-xs text-white" style="background:var(--red);font-weight:700;">S</div>
+          <div><div class="mono text-sm font-600 text-white" style="font-weight:600;">Sarah L.</div><div class="mono text-xs text-gray-600">Verified Community Member</div></div>
+        </div>
+      </div>
+
+      <div class="p-6 rounded-2xl reveal" style="background:var(--panel2);border:1px solid var(--bord2);">
+        <div class="flex gap-0.5 mb-4"><span style="color:var(--red2);font-size:0.9rem;">★★★★★</span></div>
+        <p class="text-gray-300 text-sm leading-relaxed mb-4 mono" style="font-size:0.83rem;">"The community is what makes this special. Everyone is focused on SPY, everyone has the same methodology, and the collective intelligence of the group is incredibly powerful. I've learned more here than from years of solo trading."</p>
+        <div class="flex items-center gap-3 pt-3" style="border-top:1px solid var(--bord2);">
+          <div class="w-8 h-8 rounded-xl flex items-center justify-center mono font-700 text-xs text-white" style="background:var(--red);font-weight:700;">A</div>
+          <div><div class="mono text-sm font-600 text-white" style="font-weight:600;">Alex P.</div><div class="mono text-xs text-gray-600">Verified Community Member</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════
+     PRICING
+═══════════════════════════ -->
+<section id="pricing" class="py-28" style="background:var(--dark);">
+  <div class="max-w-4xl mx-auto px-5 lg:px-8">
+    <div class="text-center mb-14">
+      <h2 class="font-800 leading-none" style="font-size:clamp(2.5rem,5vw,4.5rem);font-weight:800;">
+        <span class="text-white">Two Ways</span><br/>
+        <span class="red-text">To Join.</span>
+      </h2>
+      <p class="text-gray-500 max-w-md mx-auto mt-4 mono">Limited membership slots available. Once full, the community closes. Don't miss your window.</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+
+      <!-- Monthly -->
+      <div class="plan-card hot rounded-2xl p-8 relative overflow-visible">
+        <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full mono font-700 text-xs text-white uppercase tracking-widest" style="background:var(--red);font-weight:700;white-space:nowrap;">Most Popular · ~$2/Day</div>
+        <div class="mono text-xs uppercase tracking-widest mb-2 font-700" style="color:var(--red2);font-weight:700;">Monthly</div>
+        <div class="flex items-end gap-1 mb-1">
+          <div class="mono font-700 text-5xl text-white" style="font-weight:700;">$98</div>
+          <div class="text-gray-500 text-sm mono mb-2">/month</div>
+        </div>
+        <div class="mono text-sm text-gray-500 mb-6">SPY Day Trading Community</div>
+        <div class="h-px mb-6" style="background:rgba(220,38,38,0.2);"></div>
+        <ul class="space-y-3 mb-8">
+          <li class="flex items-start gap-2 text-sm text-gray-300"><span style="color:var(--red2);">◆</span> Real-time expert commentary (non-voice)</li>
+          <li class="flex items-start gap-2 text-sm text-gray-300"><span style="color:var(--red2);">◆</span> Daily pre-market SPY analysis & charts</li>
+          <li class="flex items-start gap-2 text-sm text-gray-300"><span style="color:var(--red2);">◆</span> Post-trade insights (early access)</li>
+          <li class="flex items-start gap-2 text-sm text-gray-300"><span style="color:var(--red2);">◆</span> Real-time charts and market data access</li>
+          <li class="flex items-start gap-2 text-sm text-gray-300"><span style="color:var(--red2);">◆</span> Active trader community & collective insights</li>
+          <li class="flex items-start gap-2 text-sm text-gray-300"><span style="color:var(--red2);">◆</span> Continuous strategy updates</li>
+          <li class="flex items-start gap-2 text-sm text-gray-300"><span style="color:var(--red2);">◆</span> Social media recognition for members</li>
+          <li class="flex items-start gap-2 text-sm text-gray-300"><span style="color:var(--red2);">◆</span> Years of successful trading experience</li>
+        </ul>
+        <a href="https://whop.com/sdt-lifetime-member/spydaytrading?a=digitalartlab" target="_blank"
+           class="btn-red block text-center py-4 rounded-xl mono font-700 text-base text-white red-glow"
+           style="font-weight:700;">
+          Join Monthly — $98/mo →
+        </a>
+        <p class="mono text-xs text-center text-gray-600 mt-3">Cancel anytime · Whop.com · Limited slots</p>
+      </div>
+
+      <!-- Lifetime -->
+      <div class="plan-card rounded-2xl p-8">
+        <div class="mono text-xs uppercase tracking-widest mb-2 font-700" style="color:var(--red2);font-weight:700;">Lifetime Access</div>
+        <div class="flex items-end gap-1 mb-1">
+          <div class="mono font-700 text-5xl text-white" style="font-weight:700;">$5,800</div>
+        </div>
+        <div class="mono text-sm text-gray-500 mb-2">SDT Lifetime Member</div>
+        <div class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs mono font-700 mb-6" style="background:rgba(220,38,38,0.1);color:var(--red2);border:1px solid var(--border);font-weight:700;">≈ Break even in ~5 years</div>
+        <div class="h-px mb-6" style="background:var(--bord2);"></div>
+        <ul class="space-y-3 mb-8">
+          <li class="flex items-start gap-2 text-sm text-gray-400"><span style="color:var(--red2);">◆</span> Everything in Monthly, plus:</li>
+          <li class="flex items-start gap-2 text-sm text-gray-400"><span style="color:var(--red2);">◆</span> Permanent one-time access — never pay again</li>
+          <li class="flex items-start gap-2 text-sm text-gray-400"><span style="color:var(--red2);">◆</span> All future content & strategy updates</li>
+          <li class="flex items-start gap-2 text-sm text-gray-400"><span style="color:var(--red2);">◆</span> Priority member status</li>
+          <li class="flex items-start gap-2 text-sm text-gray-400"><span style="color:var(--red2);">◆</span> Best value for serious long-term traders</li>
+        </ul>
+        <a href="https://whop.com/sdt-lifetime-member?a=digitalartlab" target="_blank"
+           class="block text-center py-3.5 rounded-xl mono font-700 text-sm text-white border transition-all hover:border-red-500"
+           style="border-color:var(--bord2);font-weight:700;">
+          Get Lifetime — $5,800 →
+        </a>
+      </div>
+    </div>
+
+    <!-- Urgency callout -->
+    <div class="mt-8 p-5 rounded-2xl text-center" style="background:rgba(220,38,38,0.06);border:1px solid rgba(220,38,38,0.2);">
+      <div class="mono font-700 text-white text-base mb-2" style="font-weight:700;">⚠️ Limited Membership Slots Available</div>
+      <p class="mono text-gray-500 text-sm">SPY Day Trading keeps enrollment intentionally limited to maintain community quality and ensure Eric can provide high-touch mentorship to every member. When slots fill, the community closes to new members.</p>
+    </div>
+
+    <!-- Affiliate note -->
+    <div class="mt-5 p-5 rounded-2xl text-center" style="background:var(--panel);border:1px solid var(--bord2);">
+      <div class="mono font-700 text-white text-sm mb-1" style="font-weight:700;">Earn 55% Referring Others</div>
+      <p class="mono text-gray-500 text-xs">SPY Day Trading offers a 55% affiliate commission — one of the highest in the options trading space. One referral per month at $98 virtually covers your own membership.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════
+     FAQ
+═══════════════════════════ -->
+<section id="faq" class="py-28" style="background:var(--panel);">
+  <div class="max-w-3xl mx-auto px-5 lg:px-8">
+    <div class="text-center mb-14">
+      <h2 class="font-800 leading-none" style="font-size:clamp(2.5rem,5vw,4.5rem);font-weight:800;">
+        <span class="text-white">FAQ</span>
+      </h2>
+    </div>
+    <div class="space-y-3" id="faq-block">
+
+      <div class="faq-item rounded-xl overflow-hidden" style="background:var(--panel2);border:1px solid var(--bord2);">
+        <button class="faq-trigger w-full text-left px-6 py-5 flex items-center justify-between gap-4">
+          <span class="font-600 text-sm text-white" style="font-weight:600;">Is SPY Day Trading suitable for beginners?</span>
+          <span class="faq-icon flex-shrink-0 w-6 h-6 rounded-lg flex items-center justify-center mono text-lg" style="background:rgba(220,38,38,0.1);color:var(--red2);">+</span>
+        </button>
+        <div class="faq-body px-6">
+          <p class="text-sm leading-relaxed pb-5 text-gray-400">Yes — SPY Day Trading is built for traders of all skill levels, from novice to intermediate. Eric's approach starts with the foundational concepts of market structure and options mechanics before building up to more advanced strategies. The pre-market analysis, real-time commentary, and post-trade insights create a natural learning loop that accelerates development for beginners while still providing substantial value to experienced traders looking to refine their edge.</p>
+        </div>
+      </div>
+
+      <div class="faq-item rounded-xl overflow-hidden" style="background:var(--panel2);border:1px solid var(--bord2);">
+        <button class="faq-trigger w-full text-left px-6 py-5 flex items-center justify-between gap-4">
+          <span class="font-600 text-sm text-white" style="font-weight:600;">What does "non-voice, real-time commentary" mean?</span>
+          <span class="faq-icon flex-shrink-0 w-6 h-6 rounded-lg flex items-center justify-center mono text-lg" style="background:rgba(220,38,38,0.1);color:var(--red2);">+</span>
+        </button>
+        <div class="faq-body px-6">
+          <p class="text-sm leading-relaxed pb-5 text-gray-400">Unlike some communities that use voice chat (which requires you to listen continuously), SPY Day Trading's commentary is delivered through text-based channels in real time as market conditions evolve. This means you get the same expert analysis and trade setups without needing to be plugged into audio all day. You can check in between positions, review the analysis on your own schedule, and still receive all the critical commentary as it's posted during market hours.</p>
+        </div>
+      </div>
+
+      <div class="faq-item rounded-xl overflow-hidden" style="background:var(--panel2);border:1px solid var(--bord2);">
+        <button class="faq-trigger w-full text-left px-6 py-5 flex items-center justify-between gap-4">
+          <span class="font-600 text-sm text-white" style="font-weight:600;">How much capital do I need to start trading SPY options?</span>
+          <span class="faq-icon flex-shrink-0 w-6 h-6 rounded-lg flex items-center justify-center mono text-lg" style="background:rgba(220,38,38,0.1);color:var(--red2);">+</span>
+        </button>
+        <div class="faq-body px-6">
+          <p class="text-sm leading-relaxed pb-5 text-gray-400">The strategies taught in SPY Day Trading work across all account sizes. SPY options contracts are relatively affordable — a single contract controls 100 shares and can be purchased for anywhere from a few dollars to several hundred depending on the strike and expiry chosen. The community includes members with accounts ranging from under $1,000 to six figures and beyond. The key is proper position sizing relative to your account — which is covered in the community's education.</p>
+        </div>
+      </div>
+
+      <div class="faq-item rounded-xl overflow-hidden" style="background:var(--panel2);border:1px solid var(--bord2);">
+        <button class="faq-trigger w-full text-left px-6 py-5 flex items-center justify-between gap-4">
+          <span class="font-600 text-sm text-white" style="font-weight:600;">What is Eric's background and why should I trust him?</span>
+          <span class="faq-icon flex-shrink-0 w-6 h-6 rounded-lg flex items-center justify-center mono text-lg" style="background:rgba(220,38,38,0.1);color:var(--red2);">+</span>
+        </button>
+        <div class="faq-body px-6">
+          <p class="text-sm leading-relaxed pb-5 text-gray-400">Eric has 25+ years of active trading experience, specializing in SPY and QQQ options. He is a 7-figure monthly trader — meaning his personal trading generates millions in profits each month. His reputation is verified across multiple platforms including Patreon, Discord, and YouTube, where he has built a following of serious traders. A funded trader who passed a $160K evaluation credited Eric as one of his two most important mentors. The 5.0 perfect rating on Whop reflects the consistent quality of his community.</p>
+        </div>
+      </div>
+
+      <div class="faq-item rounded-xl overflow-hidden" style="background:var(--panel2);border:1px solid var(--bord2);">
+        <button class="faq-trigger w-full text-left px-6 py-5 flex items-center justify-between gap-4">
+          <span class="font-600 text-sm text-white" style="font-weight:600;">Are there really limited membership slots?</span>
+          <span class="faq-icon flex-shrink-0 w-6 h-6 rounded-lg flex items-center justify-center mono text-lg" style="background:rgba(220,38,38,0.1);color:var(--red2);">+</span>
+        </button>
+        <div class="faq-body px-6">
+          <p class="text-sm leading-relaxed pb-5 text-gray-400">Yes — this is stated directly on the Whop listing. SPY Day Trading intentionally limits community size to maintain the quality of analysis and ensure meaningful engagement. When slots are full, the community closes to new members. This is a genuine constraint, not a marketing tactic — smaller communities produce better learning environments, and Eric is committed to maintaining that standard. If you see open availability, act quickly.</p>
+        </div>
+      </div>
+
+      <div class="faq-item rounded-xl overflow-hidden" style="background:var(--panel2);border:1px solid var(--bord2);">
+        <button class="faq-trigger w-full text-left px-6 py-5 flex items-center justify-between gap-4">
+          <span class="font-600 text-sm text-white" style="font-weight:600;">What platform does the community run on?</span>
+          <span class="faq-icon flex-shrink-0 w-6 h-6 rounded-lg flex items-center justify-center mono text-lg" style="background:rgba(220,38,38,0.1);color:var(--red2);">+</span>
+        </button>
+        <div class="faq-body px-6">
+          <p class="text-sm leading-relaxed pb-5 text-gray-400">SPY Day Trading operates across multiple platforms — primarily through a dedicated Discord server (for real-time community interaction and commentary), with additional content on Patreon and YouTube. After purchasing your membership through Whop, you'll receive access instructions to connect to all relevant channels. Eric also has an active YouTube presence where he shares free educational content, giving you a preview of his teaching style before committing to membership.</p>
+        </div>
+      </div>
+
+      <div class="faq-item rounded-xl overflow-hidden" style="background:var(--panel2);border:1px solid var(--bord2);">
+        <button class="faq-trigger w-full text-left px-6 py-5 flex items-center justify-between gap-4">
+          <span class="font-600 text-sm text-white" style="font-weight:600;">Can I cancel my monthly membership anytime?</span>
+          <span class="faq-icon flex-shrink-0 w-6 h-6 rounded-lg flex items-center justify-center mono text-lg" style="background:rgba(220,38,38,0.1);color:var(--red2);">+</span>
+        </button>
+        <div class="faq-body px-6">
+          <p class="text-sm leading-relaxed pb-5 text-gray-400">Yes. The monthly membership is managed through Whop.com and can be cancelled at any time from your Whop dashboard. Your access continues until the end of the current billing period. No long-term contracts, no cancellation fees. However, given the limited membership slot structure, if you cancel and wish to rejoin later, your slot may no longer be available — so consider this before cancelling.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════
+     FINAL CTA
+═══════════════════════════ -->
+<section class="py-32 relative overflow-hidden" style="background:var(--dark);">
+  <div class="absolute inset-0 scanline opacity-40"></div>
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full blur-3xl opacity-12" style="background:var(--red);"></div>
+  <div class="absolute inset-0">
+    <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1600&q=80&auto=format&fit=crop"
+         class="w-full h-full object-cover opacity-6"/>
+    <div class="absolute inset-0" style="background:rgba(6,6,8,0.95);"></div>
+  </div>
+  <div class="absolute top-0 left-0 right-0 h-0.5" style="background:linear-gradient(90deg,transparent,var(--red),var(--red2),var(--red),transparent);"></div>
+  <div class="absolute bottom-0 left-0 right-0 h-0.5" style="background:linear-gradient(90deg,transparent,var(--red),var(--red2),var(--red),transparent);"></div>
+
+  <div class="max-w-4xl mx-auto px-5 text-center relative z-10">
+    <div class="inline-flex items-center gap-3 px-5 py-2.5 rounded-full mb-8" style="background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);">
+      <div class="pulse-red"></div>
+      <span class="mono text-xs font-700 uppercase tracking-widest" style="color:var(--red2);font-weight:700;">Limited Slots · Join Before It's Closed</span>
+    </div>
+
+    <h2 class="font-800 leading-none mb-6" style="font-size:clamp(3rem,8vw,7.5rem);font-weight:800;line-height:0.88;">
+      <span class="text-white">CLAIM</span><br/>
+      <span class="red-text">YOUR</span><br/>
+      <span class="text-white">VICTORY.</span>
+    </h2>
+    <p class="text-gray-400 max-w-xl mx-auto mb-10 leading-relaxed mono" style="font-size:1rem;">
+      You're better than you think. $10K profits a day is very possible. You just gotta focus, work hard, and learn the right strategies. That's exactly what Eric teaches — for just $98/month.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="https://whop.com/sdt-lifetime-member/spydaytrading?a=digitalartlab" target="_blank"
+         class="btn-red inline-flex items-center justify-center gap-2 px-10 py-4 rounded-xl mono font-700 text-base text-white"
+         style="font-weight:700;">
+        Join Monthly — $98/mo →
+      </a>
+      <a href="https://whop.com/sdt-lifetime-member?a=digitalartlab" target="_blank"
+         class="inline-flex items-center justify-center gap-2 px-10 py-4 rounded-xl mono font-600 text-base text-white border transition-all hover:border-red-500"
+         style="border-color:var(--bord2);font-weight:600;">
+        Lifetime — $5,800
+      </a>
+    </div>
+    <p class="mono text-xs text-gray-700 mt-6">Trading involves risk. Past performance is not indicative of future results. Not financial advice.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════
+     FOOTER
+═══════════════════════════ -->
+<footer class="py-12" style="background:#030305;border-top:1px solid var(--bord2);">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8">
+    <div class="grid md:grid-cols-4 gap-10 mb-10">
+      <div>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-8 h-8 rounded-xl flex items-center justify-center" style="background:var(--red);">
+            <span class="mono text-white text-xs font-700" style="font-weight:700;">SPY</span>
+          </div>
+          <div>
+            <div class="font-700 text-white text-sm" style="font-weight:700;">SPY Day Trading</div>
+            <div class="mono text-xs" style="color:var(--red2);font-size:0.55rem;letter-spacing:0.1em;">BY ERIC · 25 YRS EXP</div>
+          </div>
+        </div>
+        <p class="mono text-xs text-gray-600 leading-relaxed">Creating a community to profit from trading SPY options. Led by Eric — 25 years experience, 7-figure monthly SPY & QQQ trader. 5.0★ on Whop.</p>
+      </div>
+      <div>
+        <div class="mono text-xs uppercase tracking-widest mb-4 font-700" style="color:var(--red2);font-weight:700;">Membership</div>
+        <ul class="space-y-2">
+          <li><a href="https://whop.com/sdt-lifetime-member/spydaytrading?a=digitalartlab" class="mono text-xs text-gray-600 hover:text-white transition-colors">Monthly — $98/mo</a></li>
+          <li><a href="https://whop.com/sdt-lifetime-member?a=digitalartlab" class="mono text-xs text-gray-600 hover:text-white transition-colors">Lifetime — $5,800</a></li>
+          <li><a href="https://whop.com/sdt-lifetime-member?a=digitalartlab" class="mono text-xs text-gray-600 hover:text-white transition-colors">View Whop Page</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="mono text-xs uppercase tracking-widest mb-4 font-700" style="color:var(--red2);font-weight:700;">Features</div>
+        <ul class="space-y-2">
+          <li><span class="mono text-xs text-gray-600">📊 Real-Time Commentary</span></li>
+          <li><span class="mono text-xs text-gray-600">📈 Pre-Market Analysis</span></li>
+          <li><span class="mono text-xs text-gray-600">📉 Post-Trade Insights</span></li>
+          <li><span class="mono text-xs text-gray-600">👥 Active Community</span></li>
+          <li><span class="mono text-xs text-gray-600">📡 Live Charts Access</span></li>
+        </ul>
+      </div>
+      <div>
+        <div class="mono text-xs uppercase tracking-widest mb-4 font-700" style="color:var(--red2);font-weight:700;">About Eric</div>
+        <ul class="space-y-2">
+          <li><span class="mono text-xs text-gray-600">25+ Years Experience</span></li>
+          <li><span class="mono text-xs text-gray-600">7-Figure Monthly Trader</span></li>
+          <li><span class="mono text-xs text-gray-600">SPY & QQQ Specialist</span></li>
+          <li><span class="mono text-xs text-gray-600">YouTube · Discord · Patreon</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t pt-8 flex flex-col md:flex-row items-center justify-between gap-4" style="border-color:var(--bord2);">
+      <p class="mono text-xs text-gray-700">© 2025 SPY Day Trading · sdt-lifetime-member · Whop.com · Affiliate: digitalartlab</p>
+      <p class="mono text-xs text-gray-700">Trading involves risk · Not financial advice · 55% Affiliate Commission</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════
+     JAVASCRIPT
+═══════════════════════════ -->
+<script>
+  // NAV
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => nav.classList.toggle('on', window.scrollY > 50));
+
+  // HAMBURGER
+  const ham = document.getElementById('ham');
+  const mnav = document.getElementById('mnav');
+  const hls = ham.querySelectorAll('.hl');
+  let open = false;
+  ham.addEventListener('click', () => {
+    open = !open;
+    if (open) {
+      mnav.classList.add('open');
+      hls[0].style.transform='rotate(45deg) translateY(8px)';
+      hls[1].style.opacity='0';
+      hls[2].style.transform='rotate(-45deg) translateY(-6px)';
+      hls[2].style.width='24px';
+      document.body.style.overflow='hidden';
+    } else {
+      mnav.classList.remove('open');
+      hls[0].style.transform='';hls[1].style.opacity='';
+      hls[2].style.transform='';hls[2].style.width='';
+      document.body.style.overflow='';
+    }
+  });
+  document.querySelectorAll('.ml').forEach(l => l.addEventListener('click', () => {
+    open=false; mnav.classList.remove('open');
+    hls[0].style.transform='';hls[1].style.opacity='';
+    hls[2].style.transform='';hls[2].style.width='';
+    document.body.style.overflow='';
+  }));
+
+  // FAQ
+  document.querySelectorAll('.faq-trigger').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const body = item.querySelector('.faq-body');
+      const icon = item.querySelector('.faq-icon');
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => {
+        i.classList.remove('open');
+        i.querySelector('.faq-body').classList.remove('open');
+        i.querySelector('.faq-icon').textContent = '+';
+      });
+      if (!wasOpen) {
+        item.classList.add('open');
+        body.classList.add('open');
+        icon.textContent = '×';
+      }
+    });
+  });
+
+  // REVEAL
+  const ro = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('in'), i * 100);
+        ro.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+  // Animated SPY price
+  (function() {
+    const el = document.getElementById('spyPrice');
+    if (!el) return;
+    let base = 574.12;
+    setInterval(() => {
+      base += (Math.random() - 0.48) * 0.15;
+      el.textContent = base.toFixed(2);
+    }, 2800);
+  })();
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 75, behavior: 'smooth' }); }
+    });
+  });
+</script>
+</body>
+</html>
